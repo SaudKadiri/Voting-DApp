@@ -2,10 +2,24 @@ pragma solidity ^0.5.16;
 
 // Declare contract 
 contract Election {
-    // Candidate attributes
-    string public candidate;
+    // Candidate Model
+    struct Candidate {
+        uint id;
+        string name;
+        uint vote_count;
+    }
+    // Map / dictionary to map an id to it's corresponding candidate
+    mapping(uint => Candidate) public candidates;
+    uint public candidateCount;
     // Constructor
     constructor() public {
-        candidate = "candidate1";
+        candidateCount = 0;
+        addCandidate('Alice');
+        addCandidate('Bob');
+    }
+
+    function addCandidate(string memory _name) private {
+        candidateCount++;
+        candidates[candidateCount] = Candidate(candidateCount, _name, 0);
     }
 }
